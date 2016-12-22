@@ -32,7 +32,7 @@ public class Player {
             if (name == "Clanto") {
                 JsonArray hole_cards = player.get("hole_cards").getAsJsonArray();
 
-                for (j=0; j < hole_cards.size(); j++) {
+                for (int j=0; j < hole_cards.size(); j++) {
                     JsonObject currentCard = hole_cards.get(j).getAsJsonObject();
                     String rank = currentCard.get("rank").getAsString();
                     String suit = currentCard.get("suit").getAsString();
