@@ -1,5 +1,7 @@
 package org.leanpoker.player;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import javax.servlet.ServletException;
@@ -22,6 +24,14 @@ public class PlayerServlet extends HttpServlet {
         if (req.getParameter("action").equals("bet_request")) {
             String gameState = req.getParameter("game_state");
             System.out.println("gameState: " + gameState);
+
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(gameState);
+            JsonObject json = jsonElement.getAsJsonObject();
+
+            System.out.println("*** SMALL BLIND *** " + json.get("small_blind"));
+
+
             resp.getWriter().print(Player.betRequest(new JsonParser().parse(gameState)));
         }
         if (req.getParameter("action").equals("showdown")) {
