@@ -11,6 +11,7 @@ public class Player {
     static final String VERSION = "Default Java folding player";
 
     public static int betRequest(JsonElement request) {
+        Card[] ourCards = new Card[2];
         JsonObject json;
         json = request.getAsJsonObject();
 
@@ -47,13 +48,24 @@ public class Player {
                     String rank = currentCard.get("rank").getAsString();
                     String suit = currentCard.get("suit").getAsString();
 
+                    ourCards[j] = new Card(rank, suit);
                     System.out.println("**** current Card: " + rank + " - " + suit);
 
                 }
             }
         }
 
-        return currentBuyIn+minimumRaise;
+
+        return  analyzeCards(ourCards, currentBuyIn, minimumRaise); //currentBuyIn+minimumRaise;
+    }
+
+    private static int analyzeCards(Card[] cards, int currentBuyIn, int minimumRaise) {
+        int bet = 0;
+        if (cards[0].suit.equals(cards[1].suit)) {
+            bet = currentBuyIn + minimumRaise;
+        }
+
+        return bet;
     }
 
     public static void showdown(JsonElement game) {
