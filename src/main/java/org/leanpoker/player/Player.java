@@ -66,7 +66,8 @@ public class Player {
     }
 
     private static int analyzeCards(Card[] cards, Card[] communityCards, int currentBuyIn, int minimumRaise) {
-        int bet = 0;
+        int bet = -10;
+
         if (cards[0].suit.equals(cards[1].suit)) {
             bet = currentBuyIn + minimumRaise;
         }
@@ -101,6 +102,11 @@ public class Player {
 
         return isPaarMitFlop;
     }
+
+    private static int raise() {
+        return currentBuyIn + minimumRaise;
+    }
+
 
     public static void showdown(JsonElement game) {
     }
