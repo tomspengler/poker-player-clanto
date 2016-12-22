@@ -84,7 +84,7 @@ public class Player {
             } else if (paarMitFlop(cards, communityCards)) {
                 bet = currentBuyIn + minimumRaise;
             } else {
-                bet = -10;
+                bet = 0;
             }
         }
 
