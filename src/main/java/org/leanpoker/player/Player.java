@@ -68,6 +68,7 @@ public class Player {
 
         if (betIndex <=5) {
             System.out.println("ERSTE RUNDE geht immer mit!");
+
             bet = currentBuyIn;
         } else {
             System.out.println("***** betIndex: " + betIndex);
