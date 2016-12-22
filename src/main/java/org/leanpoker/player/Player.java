@@ -29,7 +29,7 @@ public class Player {
 
             System.out.println("**** " + id + " - " + name);
 
-            if (name == "Clanto") {
+            if (name.equals("Clanto")) {
                 JsonArray hole_cards = player.get("hole_cards").getAsJsonArray();
 
                 for (int j=0; j < hole_cards.size(); j++) {
