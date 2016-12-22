@@ -3,8 +3,11 @@ package org.leanpoker.player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.tools.javac.util.ArrayUtils;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Player {
 
@@ -12,6 +15,8 @@ public class Player {
 
     public static int betRequest(JsonElement request) {
         Card[] ourCards = new Card[2];
+        Card[] communityCards = new Card[5];
+
         JsonObject json;
         json = request.getAsJsonObject();
 
@@ -21,12 +26,13 @@ public class Player {
         int currentBuyIn = json.get("current_buy_in").getAsInt();
         int minimumRaise = json.get("minimum_raise").getAsInt();
 
-        JsonArray communityCards = json.get("community_cards").getAsJsonArray();
-        for (int k=0; k < communityCards.size(); k++) {
-            JsonObject currentCard = communityCards.get(k).getAsJsonObject();
+        JsonArray communityCardsArray = json.get("community_cards").getAsJsonArray();
+        for (int k=0; k < communityCardsArray.size(); k++) {
+            JsonObject currentCard = communityCardsArray.get(k).getAsJsonObject();
             String rank = currentCard.get("rank").getAsString();
             String suit = currentCard.get("suit").getAsString();
 
+            communityCards[k] = new Card(rank, suit);
             System.out.println("**** current community card: " + rank + " - " + suit);
         }
 
@@ -56,10 +62,10 @@ public class Player {
         }
 
 
-        return  analyzeCards(ourCards, currentBuyIn, minimumRaise); //currentBuyIn+minimumRaise;
+        return  analyzeCards(ourCards, communityCards, currentBuyIn, minimumRaise); //currentBuyIn+minimumRaise;
     }
 
-    private static int analyzeCards(Card[] cards, int currentBuyIn, int minimumRaise) {
+    private static int analyzeCards(Card[] cards, Card[] communityCards, int currentBuyIn, int minimumRaise) {
         int bet = 0;
         if (cards[0].suit.equals(cards[1].suit)) {
             bet = currentBuyIn + minimumRaise;
@@ -73,8 +79,27 @@ public class Player {
             bet = currentBuyIn + minimumRaise;
         }
 
+        if (paarMitFlop(cards, communityCards)) {
+            bet = currentBuyIn + minimumRaise;
+        }
+
         System.out.println("***** BET: " + bet);
         return bet;
+    }
+
+    private static boolean paarMitFlop(Card[] cards, Card[] communityCards) {
+        boolean isPaarMitFlop = false;
+
+        for (int i=0; i < communityCards.length; i++) {
+            if (communityCards[i].rank.equals(cards[0].rank) || communityCards[i].rank.equals(cards[1].rank)) {
+                System.out.println("**** PaarMitFlop: " + communityCards[i].rank);
+                isPaarMitFlop = true;
+                break;
+            }
+        }
+
+
+        return isPaarMitFlop;
     }
 
     public static void showdown(JsonElement game) {
