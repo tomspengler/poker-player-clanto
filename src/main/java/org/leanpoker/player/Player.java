@@ -11,7 +11,7 @@ public class Player {
 
     public static int betRequest(JsonElement request) {
         Card[] ourCards = new Card[2];
-        Card[] communityCards = new Card[1];
+        Card[] communityCards = new Card[5];
 
         JsonObject json;
         json = request.getAsJsonObject();
@@ -81,9 +81,9 @@ public class Player {
             } else if (cards[0].rank.equals("A") || cards[1].rank.equals("A")) {
                 System.out.println("Ein As auf der Hand");
                 bet = currentBuyIn + minimumRaise;
-            } /* else if (paarMitFlop(cards, communityCards)) {
+            } else if (paarMitFlop(cards, communityCards)) {
                 bet = currentBuyIn + minimumRaise;
-            } */ else {
+            } else {
                 bet = -10;
             }
         }
@@ -100,10 +100,12 @@ public class Player {
         }
 
         for (int i=0; i < communityCards.length; i++) {
-            if (communityCards[i].rank.equals(cards[0].rank) || communityCards[i].rank.equals(cards[1].rank)) {
-                System.out.println("**** PaarMitFlop: " + communityCards[i].rank);
-                isPaarMitFlop = true;
-                break;
+            if (communityCards[i] != null) {
+                if (communityCards[i].rank.equals(cards[0].rank) || communityCards[i].rank.equals(cards[1].rank)) {
+                    System.out.println("**** PaarMitFlop: " + communityCards[i].rank);
+                    isPaarMitFlop = true;
+                    break;
+                }
             }
         }
 
