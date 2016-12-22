@@ -65,6 +65,10 @@ public class Player {
             bet = currentBuyIn + minimumRaise;
         }
 
+        if (cards[0].rank.equals(cards[1].rank)) {
+            bet = currentBuyIn + minimumRaise;
+        }
+
         System.out.println("***** BET: " + bet);
         return bet;
     }
