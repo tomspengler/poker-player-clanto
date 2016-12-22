@@ -20,6 +20,16 @@ public class Player {
         int currentBuyIn = json.get("current_buy_in").getAsInt();
         int minimumRaise = json.get("minimum_raise").getAsInt();
 
+        JsonArray communityCards = json.get("community_cards").getAsJsonArray();
+        for (int k=0; k < communityCards.size(); k++) {
+            JsonObject currentCard = communityCards.get(k).getAsJsonObject();
+            String rank = currentCard.get("rank").getAsString();
+            String suit = currentCard.get("suit").getAsString();
+
+            System.out.println("**** current community card: " + rank + " - " + suit);
+        }
+
+
         JsonArray players = json.get("players").getAsJsonArray();
 
         for (int i=0; i < players.size(); i++) {
