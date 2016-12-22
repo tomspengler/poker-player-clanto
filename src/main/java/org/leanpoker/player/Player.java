@@ -60,27 +60,31 @@ public class Player {
         }
 
 
-        return  analyzeCards(ourCards, communityCards, currentBuyIn, minimumRaise); //currentBuyIn+minimumRaise;
+        return  analyzeCards(ourCards, communityCards, currentBuyIn, minimumRaise, betIndex); //currentBuyIn+minimumRaise;
     }
 
-    private static int analyzeCards(Card[] cards, Card[] communityCards, int currentBuyIn, int minimumRaise) {
-        int bet = -10;
+    private static int analyzeCards(Card[] cards, Card[] communityCards, int currentBuyIn, int minimumRaise, int betIndex) {
+        int bet;
 
-        if (cards[0].suit.equals(cards[1].suit)) {
-            bet = currentBuyIn + minimumRaise;
-        }
-
-        if (cards[0].rank.equals(cards[1].rank)) {
-            bet = currentBuyIn + minimumRaise;
-        }
-
-        if (cards[0].equals("A") || cards[1].equals("A")) {
-            System.out.println("Ein As auf der Hand");
-            bet = currentBuyIn + minimumRaise;
-        }
-
-        if (paarMitFlop(cards, communityCards)) {
-            bet = currentBuyIn + minimumRaise;
+        if (betIndex <=5) {
+            System.out.println("ERSTE RUNDE geht immer mit!")
+            bet = currentBuyIn;
+        } else {
+            System.out.println("***** betIndex: " + betIndex);
+            if (cards[0].suit.equals(cards[1].suit)) {
+                System.out.println("gleiche Farbe");
+                bet = currentBuyIn + minimumRaise;
+            } else if (cards[0].rank.equals(cards[1].rank)) {
+                System.out.println("gleicher Rank");
+                bet = currentBuyIn + minimumRaise;
+            } else if (cards[0].rank.equals("A") || cards[1].rank.equals("A")) {
+                System.out.println("Ein As auf der Hand");
+                bet = currentBuyIn + minimumRaise;
+            } else if (paarMitFlop(cards, communityCards)) {
+                bet = currentBuyIn + minimumRaise;
+            } else {
+                bet = -10;
+            }
         }
 
         System.out.println("***** BET: " + bet);
