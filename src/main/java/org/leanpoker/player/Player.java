@@ -65,6 +65,7 @@ public class Player {
             bet = currentBuyIn + minimumRaise;
         }
 
+        System.out.println("***** BET: " + bet);
         return bet;
     }
 
