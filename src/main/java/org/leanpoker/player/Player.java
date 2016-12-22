@@ -16,7 +16,8 @@ public class Player {
         JsonElement smallBlindString = json.get("small_blind");
         int smallblind = smallBlindString.getAsInt();
 
-        return smallblind*2;
+
+        return 0;
     }
 
     public static void showdown(JsonElement game) {
