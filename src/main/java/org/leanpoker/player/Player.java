@@ -94,6 +94,10 @@ public class Player {
     private static boolean paarMitFlop(Card[] cards, Card[] communityCards) {
         boolean isPaarMitFlop = false;
 
+        if (cards == null || communityCards == null) {
+            return false;
+        }
+
         for (int i=0; i < communityCards.length; i++) {
             if (communityCards[i].rank.equals(cards[0].rank) || communityCards[i].rank.equals(cards[1].rank)) {
                 System.out.println("**** PaarMitFlop: " + communityCards[i].rank);
