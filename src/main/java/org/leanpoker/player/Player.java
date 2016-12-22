@@ -3,11 +3,7 @@ package org.leanpoker.player;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sun.tools.javac.util.ArrayUtils;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Stream;
 
 public class Player {
 
@@ -25,6 +21,8 @@ public class Player {
 
         int currentBuyIn = json.get("current_buy_in").getAsInt();
         int minimumRaise = json.get("minimum_raise").getAsInt();
+
+        int betIndex = json.get("bet_index").getAsInt();
 
         JsonArray communityCardsArray = json.get("community_cards").getAsJsonArray();
         for (int k=0; k < communityCardsArray.size(); k++) {
@@ -77,6 +75,7 @@ public class Player {
         }
 
         if (cards[0].equals("A") || cards[1].equals("A")) {
+            System.out.println("Ein As auf der Hand");
             bet = currentBuyIn + minimumRaise;
         }
 
@@ -103,9 +102,6 @@ public class Player {
         return isPaarMitFlop;
     }
 
-    private static int raise() {
-        return currentBuyIn + minimumRaise;
-    }
 
 
     public static void showdown(JsonElement game) {
